@@ -246,7 +246,7 @@ describe 'Commands' do
         subject.should_receive(:git_call).with('stash')
         subject.should_receive(:git_call).with('checkout master')
         subject.should_receive(:git_call).with('reset --hard origin/master')
-        subject.should_receive(:git_call).with("checkout #{branch_name}")
+        subject.should_receive(:git_call).with(/#{feature_name}/)
         subject.send(:move_uncommitted_changes, 'master', feature_name)
       end
 
