@@ -243,10 +243,12 @@ describe 'Commands' do
       it 'moves uncommitted changes to the new branch' do
         local.stub(:source_branch).and_return(branch_name)
         local.stub(:uncommited_changes?).and_return(true)
+        subject.should_receive(:git_call).with(/#{feature_name}/)
         subject.should_receive(:git_call).with('stash')
         subject.should_receive(:git_call).with('checkout master')
         subject.should_receive(:git_call).with('reset --hard origin/master')
         subject.should_receive(:git_call).with(/#{feature_name}/)
+        subject.should_receive(:git_call).with('stash pop')
         subject.send(:move_uncommitted_changes, 'master', feature_name)
       end
 
